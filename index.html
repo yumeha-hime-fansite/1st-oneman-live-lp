@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>夢羽ヒメ ワンマンライブ「Miracle World」| 特設サイト</title>
+<meta name="description" content="夢羽ヒメ 1stワンマンライブ「Miracle World」特設サイト。日時・会場・チケット情報はこちら。">
+
+<!-- ============================================================
+     フォント読み込み（和文見出し用:Shippori Mincho / 本文用:Noto Sans JP）
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;800&family=Noto+Sans+JP:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+
+<style>
+/* ================================================================
+   1. デザイントークン（変数一元管理）
+   色・余白・角丸などはすべてここで定義。サイト全体の配色や余白の
+   調整はこのブロックを編集するだけで完結します。
+   ================================================================ */
+:root{
+  /* --- カラー：紫の星雲 × ラベンダー × 金 --- */
+  --bg-void:      #0a0716;   /* 最背面・深宇宙の黒紫 */
+  --bg-nebula-1:  #241238;   /* 星雲グラデーション1（濃紫） */
+  --bg-nebula-2:  #3d1f63;   /* 星雲グラデーション2（紫） */
+  --bg-nebula-3:  #1a0f2e;   /* 星雲グラデーション3（陰） */
+  --lavender:     #b6a3e8;   /* テーマカラー：ラベンダー */
+  --lavender-soft:#e2d9f7;   /* ラベンダー（明） */
+  --lavender-deep:#7a63b8;   /* ラベンダー（暗・アクセント） */
+  --gold:         #d8b168;   /* 金（神々しさのアクセント） */
+  --gold-bright:  #f3daa0;   /* 金（明るめ・ハイライト） */
+  --text-main:    #f5f1fb;   /* 本文メイン文字色 */
+  --text-sub:     #b6acd1;   /* 本文サブ文字色 */
+  --panel-bg:     rgba(255,255,255,0.045); /* カード背景 */
+  --panel-border: rgba(214,190,255,0.18);  /* カード枠線 */
+
+  /* --- タイポグラフィ --- */
+  --font-display: 'Shippori Mincho', serif;
+  --font-body:    'Noto Sans JP', sans-serif;
+  --font-en:      'Cormorant Garamond', serif;
+
+  /* --- レイアウト --- */
+  --max-width:    1080px;
+  --radius-l:     22px;
+  --radius-m:     14px;
+  --space-section: clamp(64px, 10vw, 120px);
+}
+
+/* ================================================================
+   2. コンテンツ変数（固有名詞・テキスト）
+   ※ここはCSSのカスタムプロパティではなく参照用メモです。
+     実際の差し替えはページ下部の <script> 内 CONFIG オブジェクトで
+     一括管理しています（VSinger名・ライブ名・会場名・料金など）。
+   ================================================================ */
+
+/* ---------------- 基本リセット ---------------- */
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; }
+body{
+  background:var(--bg-void);
+  color:var(--text-main);
+  font-family:var(--font-body);
+  line-height:1.85;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+img{ max-width:100%; display:block; }
+a{ color:inherit; text-decoration:none; }
+ul{ list-style:none; }
+section{ position:relative; z-index:2; }
+
+/* ---------------- 星雲・星空背景（全ページ共通の signature 演出） ---------------- */
+.cosmos{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 50% at 20% 15%, rgba(122,99,184,0.35), transparent 60%),
+    radial-gradient(ellipse 60% 45% at 85% 25%, rgba(216,177,104,0.12), transparent 60%),
+    radial-gradient(ellipse 80% 60% at 50% 90%, rgba(61,31,99,0.55), transparent 65%),
+    linear-gradient(180deg, var(--bg-void) 0%, var(--bg-nebula-3) 40%, var(--bg-void) 100%);
+}
+#stars{ position:fixed; inset:0; z-index:1; pointer-events:none; }
+#stars canvas{ width:100%; height:100%; display:block; }
+
+/* 漂う光の羽（天使モチーフ） */
+.feather{
+  position:fixed; z-index:1; pointer-events:none;
+  width:6px; height:6px; border-radius:50%;
+  background:radial-gradient(circle, var(--gold-bright), transparent 70%);
+  filter:blur(1px);
+  opacity:0.7;
+  animation:drift linear infinite;
+}
+@keyframes drift{
+  0%{ transform:translateY(110vh) translateX(0) scale(1); opacity:0; }
+  10%{ opacity:0.8; }
+  90%{ opacity:0.6; }
+  100%{ transform:translateY(-10vh) translateX(40px) scale(0.6); opacity:0; }
+}
+
+/* ---------------- ナビゲーション ---------------- */
+header.nav{
+  position:fixed; top:0; left:0; right:0; z-index:50;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px clamp(16px,4vw,48px);
+  background:linear-gradient(180deg, rgba(10,7,22,0.85), transparent);
+  backdrop-filter:blur(6px);
+}
+.nav-logo{
+  font-family:var(--font-display);
+  font-size:16px; letter-spacing:.08em; color:var(--lavender-soft);
+}
+.nav-links{ display:none; gap:28px; font-size:13px; letter-spacing:.08em; }
+.nav-links a{ color:var(--text-sub); transition:color .25s; }
+.nav-links a:hover{ color:var(--gold-bright); }
+@media(min-width:760px){ .nav-links{ display:flex; } }
+.nav-toggle{
+  display:flex; flex-direction:column; gap:5px; background:none; border:none;
+  cursor:pointer; padding:6px;
+}
+.nav-toggle span{ width:22px; height:1.5px; background:var(--lavender-soft); }
+@media(min-width:760px){ .nav-toggle{ display:none; } }
+.nav-drawer{
+  position:fixed; inset:0 0 0 auto; width:70%; max-width:280px; z-index:60;
+  background:linear-gradient(180deg, var(--bg-nebula-1), var(--bg-void));
+  border-left:1px solid var(--panel-border);
+  padding:80px 32px; display:flex; flex-direction:column; gap:26px;
+  transform:translateX(100%); transition:transform .4s ease;
+}
+.nav-drawer.open{ transform:translateX(0); }
+.nav-drawer a{ font-size:15px; color:var(--text-sub); letter-spacing:.08em; }
+.nav-scrim{
+  position:fixed; inset:0; z-index:55; background:rgba(0,0,0,.5);
+  opacity:0; pointer-events:none; transition:opacity .3s;
+}
+.nav-scrim.open{ opacity:1; pointer-events:auto; }
+
+/* ---------------- 共通：セクション見出し ---------------- */
+.section-inner{ max-width:var(--max-width); margin:0 auto; padding:0 clamp(20px,5vw,40px); }
+.eyebrow{
+  font-family:var(--font-en); font-style:italic; letter-spacing:.18em;
+  color:var(--gold); font-size:14px; text-transform:uppercase;
+  display:flex; align-items:center; gap:12px; margin-bottom:14px;
+}
+.eyebrow::before{ content:''; width:28px; height:1px; background:var(--gold); }
+h2.section-title{
+  font-family:var(--font-display); font-weight:700;
+  font-size:clamp(28px,5vw,42px); color:var(--lavender-soft);
+  margin-bottom:36px; letter-spacing:.04em;
+}
+
+/* ---------------- TOP / HERO ---------------- */
+.hero{
+  min-height:100svh; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; text-align:center;
+  padding:120px 20px 60px; position:relative;
+}
+.hero-halo{
+  position:absolute; top:50%; left:50%; width:min(90vw,620px); aspect-ratio:1;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle, rgba(216,177,104,0.16), rgba(182,163,232,0.08) 45%, transparent 70%);
+  border-radius:50%; z-index:-1; animation:halo-pulse 7s ease-in-out infinite;
+}
+@keyframes halo-pulse{ 0%,100%{ opacity:.7; transform:translate(-50%,-50%) scale(1);} 50%{ opacity:1; transform:translate(-50%,-50%) scale(1.06);} }
+
+/* ライブメインビジュアル差し込み枠（1920×1080 / 16:9）：src差し替え、または background画像に変更可 */
+.hero-visual{
+  width:min(92vw,720px); aspect-ratio:16/9; margin:0 auto 32px;
+  border-radius:var(--radius-l);
+  border:1px solid var(--panel-border);
+  background:
+    linear-gradient(160deg, rgba(182,163,232,0.15), rgba(216,177,104,0.08)),
+    var(--bg-nebula-1);
+  box-shadow:0 0 60px rgba(182,163,232,0.25), 0 0 0 1px rgba(255,255,255,0.03) inset;
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+}
+.hero-visual img{ width:100%; height:100%; object-fit:cover; }
+.hero-visual .placeholder-label{
+  font-family:var(--font-en); font-style:italic; color:var(--text-sub); font-size:13px;
+  letter-spacing:.05em; padding:0 24px; text-align:center;
+}
+.hero-eyebrow{ font-family:var(--font-en); font-style:italic; letter-spacing:.25em; color:var(--gold-bright); font-size:14px; margin-bottom:10px; }
+.hero-name{ font-family:var(--font-display); font-size:clamp(15px,3vw,18px); color:var(--lavender-soft); letter-spacing:.15em; margin-bottom:8px; }
+.hero-title{
+  font-family:var(--font-display); font-weight:800; letter-spacing:.06em;
+  font-size:clamp(32px,8vw,60px); line-height:1.25;
+  background:linear-gradient(100deg, var(--lavender-soft) 20%, var(--gold-bright) 55%, var(--lavender-soft) 85%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  margin:6px 0 18px;
+}
+.hero-sub{ color:var(--text-sub); font-size:14px; letter-spacing:.04em; margin-bottom:36px; }
+.hero-date{ font-family:var(--font-en); font-size:clamp(18px,3vw,22px); letter-spacing:.06em; color:var(--gold); margin-bottom:6px; }
+.hero-venue{ font-size:14px; color:var(--text-sub); margin-bottom:36px; }
+
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:15px 38px; border-radius:999px; font-size:14px; letter-spacing:.08em;
+  font-weight:500; border:1px solid transparent; cursor:pointer; transition:transform .25s, box-shadow .25s;
+}
+.btn-primary{
+  background:linear-gradient(100deg, var(--gold) 0%, var(--gold-bright) 50%, var(--gold) 100%);
+  color:#231334; font-weight:700; box-shadow:0 8px 30px rgba(216,177,104,0.3);
+}
+.btn-primary:hover{ transform:translateY(-2px); box-shadow:0 12px 34px rgba(216,177,104,0.45); }
+.btn-outline{
+  border-color:var(--panel-border); color:var(--lavender-soft); background:rgba(255,255,255,0.03);
+}
+.btn-outline:hover{ border-color:var(--gold); color:var(--gold-bright); }
+
+.scroll-cue{
+  position:absolute; bottom:28px; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+  color:var(--text-sub); font-size:11px; letter-spacing:.2em;
+}
+.scroll-cue .line{ width:1px; height:34px; background:linear-gradient(var(--gold), transparent); animation:scroll-line 1.8s ease-in-out infinite; }
+@keyframes scroll-line{ 0%{ opacity:0; } 40%{ opacity:1; } 100%{ opacity:0; transform:translateY(10px); } }
+
+/* ---------------- CONCEPT ---------------- */
+.concept{ padding:var(--space-section) 0; text-align:center; }
+.concept-lead{
+  font-family:var(--font-display); font-size:clamp(20px,3.4vw,28px);
+  color:var(--lavender-soft); line-height:1.9; max-width:680px; margin:0 auto 28px;
+}
+.concept-body{ color:var(--text-sub); max-width:600px; margin:0 auto; font-size:15px; }
+.divider{
+  width:1px; height:60px; margin:40px auto;
+  background:linear-gradient(var(--gold), transparent);
+}
+
+/* ---------------- GUEST ---------------- */
+.guest{ padding:var(--space-section) 0; }
+.guest-card{
+  display:flex; flex-direction:column; gap:26px;
+  background:var(--panel-bg); border:1px solid var(--panel-border); border-radius:var(--radius-l);
+  padding:clamp(24px,4vw,40px); align-items:center; text-align:center;
+}
+@media(min-width:700px){
+  .guest-card{ flex-direction:row; text-align:left; align-items:flex-start; gap:36px; }
+}
+.guest-photo{
+  width:160px; height:160px; flex-shrink:0; border-radius:50%; overflow:hidden;
+  border:1px solid var(--panel-border);
+  background:linear-gradient(160deg, rgba(182,163,232,0.16), rgba(216,177,104,0.08)), var(--bg-nebula-1);
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 0 40px rgba(182,163,232,0.2);
+}
+.guest-photo img{ width:100%; height:100%; object-fit:cover; }
+.guest-photo span{ font-family:var(--font-en); font-style:italic; color:var(--text-sub); font-size:12px; }
+.guest-body{ flex:1; }
+.guest-role{ font-family:var(--font-en); font-style:italic; letter-spacing:.1em; color:var(--gold); font-size:13px; margin-bottom:6px; }
+.guest-name{ font-family:var(--font-display); font-size:22px; color:var(--lavender-soft); margin-bottom:14px; letter-spacing:.04em; }
+.guest-desc{ font-size:14px; color:var(--text-sub); margin-bottom:16px; }
+.guest-comment{
+  font-size:13.5px; color:var(--text-main); padding-left:16px;
+  border-left:2px solid var(--gold); line-height:1.9;
+}
+
+/* ---------------- OUTLINE ---------------- */
+.outline{ padding:var(--space-section) 0; }
+.outline-table{
+  border-top:1px solid var(--panel-border);
+}
+.outline-row{
+  display:grid; grid-template-columns:110px 1fr; gap:8px 24px;
+  padding:22px 4px; border-bottom:1px solid var(--panel-border);
+  font-size:14.5px;
+}
+.outline-row dt{ color:var(--gold); font-family:var(--font-en); font-style:italic; letter-spacing:.04em; }
+.outline-row dd{ color:var(--text-main); }
+.outline-row dd small{ display:block; color:var(--text-sub); font-size:12.5px; margin-top:4px; }
+@media(min-width:600px){ .outline-row{ grid-template-columns:160px 1fr; } }
+
+/* ---------------- TICKET ---------------- */
+.ticket{ padding:var(--space-section) 0; }
+.ticket-grid{ display:grid; gap:20px; grid-template-columns:1fr; }
+@media(min-width:700px){ .ticket-grid{ grid-template-columns:repeat(3,1fr); } }
+.ticket-card{
+  background:var(--panel-bg); border:1px solid var(--panel-border); border-radius:var(--radius-l);
+  padding:30px 26px; display:flex; flex-direction:column; gap:14px; position:relative; overflow:hidden;
+}
+.ticket-card.is-featured{ border-color:rgba(216,177,104,0.5); }
+.ticket-card.is-featured::before{
+  content:'RECOMMENDED'; position:absolute; top:16px; right:-34px; transform:rotate(38deg);
+  background:var(--gold); color:#231334; font-size:10px; font-weight:700; letter-spacing:.1em;
+  padding:4px 40px;
+}
+.ticket-name{ font-family:var(--font-display); font-size:19px; color:var(--lavender-soft); }
+.ticket-desc{ font-size:13px; color:var(--text-sub); min-height:36px; }
+.ticket-price{ font-family:var(--font-en); font-size:30px; color:var(--gold-bright); margin-top:auto; }
+.ticket-price span{ font-size:13px; color:var(--text-sub); font-family:var(--font-body); }
+.ticket-note{ margin-top:32px; font-size:12.5px; color:var(--text-sub); text-align:center; }
+
+/* ---------------- GOODS ---------------- */
+.goods{ padding:var(--space-section) 0; }
+.goods-grid{ display:grid; gap:18px; grid-template-columns:repeat(2,1fr); }
+@media(min-width:700px){ .goods-grid{ grid-template-columns:repeat(4,1fr); } }
+.goods-card{ border-radius:var(--radius-m); overflow:hidden; background:var(--panel-bg); border:1px solid var(--panel-border); }
+.goods-thumb{
+  aspect-ratio:1; background:linear-gradient(145deg, rgba(182,163,232,0.14), rgba(216,177,104,0.08));
+  display:flex; align-items:center; justify-content:center; color:var(--text-sub); font-size:11px;
+}
+.goods-info{ padding:12px 14px 16px; }
+.goods-info .name{ font-size:13px; color:var(--text-main); margin-bottom:4px; }
+.goods-info .price{ font-family:var(--font-en); color:var(--gold-bright); font-size:15px; }
+
+/* ---------------- ATTENTION ---------------- */
+.attention{ padding:var(--space-section) 0; }
+.attention-list{ display:flex; flex-direction:column; gap:14px; }
+.attention-list li{
+  display:flex; gap:12px; font-size:13.5px; color:var(--text-sub);
+  padding:16px 18px; background:var(--panel-bg); border:1px solid var(--panel-border); border-radius:var(--radius-m);
+}
+.attention-list li::before{ content:'✦'; color:var(--gold); flex-shrink:0; }
+
+/* ---------------- FOOTER ---------------- */
+footer{
+  padding:70px 20px 40px; text-align:center; position:relative; z-index:2;
+  border-top:1px solid var(--panel-border); margin-top:40px;
+}
+.footer-name{ font-family:var(--font-display); color:var(--lavender-soft); font-size:16px; margin-bottom:24px; letter-spacing:.06em; }
+.sns-links{ display:flex; justify-content:center; gap:18px; margin-bottom:28px; }
+.sns-links a{
+  width:46px; height:46px; border-radius:50%; border:1px solid var(--panel-border);
+  display:flex; align-items:center; justify-content:center; transition:all .25s;
+  color:var(--lavender-soft);
+}
+.sns-links a:hover{ border-color:var(--gold); color:var(--gold-bright); transform:translateY(-3px); }
+.sns-links svg{ width:19px; height:19px; }
+.footer-copy{ font-size:11.5px; color:var(--text-sub); letter-spacing:.04em; }
+
+/* ---------------- 汎用 reveal アニメーション ---------------- */
+.reveal{ opacity:0; transform:translateY(24px); transition:opacity .8s ease, transform .8s ease; }
+.reveal.is-visible{ opacity:1; transform:translateY(0); }
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+  html{ scroll-behavior:auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- 背景演出（星雲・星空） -->
+<div class="cosmos"></div>
+<div id="stars"></div>
+
+<!-- ナビゲーション -->
+<header class="nav">
+  <a href="#top" class="nav-logo" id="navLogo">Celestial Wing</a>
+  <nav class="nav-links">
+    <a href="#concept">CONCEPT</a>
+    <a href="#outline">OUTLINE</a>
+    <a href="#ticket">TICKET</a>
+    <a href="#goods">GOODS</a>
+    <a href="#attention">ATTENTION</a>
+  </nav>
+  <button class="nav-toggle" id="navToggle" aria-label="メニューを開く">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+<div class="nav-scrim" id="navScrim"></div>
+<div class="nav-drawer" id="navDrawer">
+  <a href="#concept">CONCEPT</a>
+  <a href="#outline">OUTLINE</a>
+  <a href="#ticket">TICKET</a>
+  <a href="#goods">GOODS</a>
+  <a href="#attention">ATTENTION</a>
+</div>
+
+<!-- ================= TOP ================= -->
+<section class="hero" id="top">
+  <div class="hero-halo"></div>
+  <p class="hero-eyebrow">ONEMAN LIVE</p>
+  <p class="hero-name" id="vsingerName">夢羽ヒメ</p>
+
+  <!-- ライブメインビジュアル差し込み枠（1920×1080 / 16:9 想定）：
+       画像を使う場合は <img src="images/main-visual.jpg" alt="..."> に置き換えてください -->
+  <div class="hero-visual" id="mainVisual">
+    <span class="placeholder-label">MAIN VISUAL 1920×1080<br>ここにライブキービジュアルを挿入</span>
+  </div>
+
+  <h1 class="hero-title" id="liveTitle">Miracle World</h1>
+  <p class="hero-sub" id="liveCatch">ここでしか見られない、奇跡の世界へ</p>
+  <p class="hero-date" id="liveDate">2026.10.10 SAT</p>
+  <p class="hero-venue" id="liveVenue">LIVE SPACE Q</p>
+
+  <a href="#ticket" class="btn btn-primary">チケット情報を見る</a>
+
+  <div class="scroll-cue"><span>SCROLL</span><span class="line"></span></div>
+</section>
+
+<!-- ================= CONCEPT ================= -->
+<section class="concept" id="concept">
+  <div class="section-inner">
+    <p class="eyebrow">Concept</p>
+    <p class="concept-lead" id="conceptLead">
+      初披露の3Dモデルで送る<br>1st ワンマンライブ
+    </p>
+    <div class="divider"></div>
+    <p class="concept-body" id="conceptBody">
+      デビューから積み重ねてきた歌声と物語を、一夜だけのステージに。
+      夢羽ヒメというひとりのVSingerが持つ「可憐さ」と「圧倒的な歌唱力」、
+      そのコントラストを最も近い距離で体感できる時間です。
+      ここでしか聴けないパフォーマンス、ぜひご体験ください。
+    </p>
+  </div>
+</section>
+
+<!-- ================= GUEST（メニューには含めない単独セクション） ================= -->
+<section class="guest" id="guest">
+  <div class="section-inner">
+    <p class="eyebrow">Guest</p>
+    <h2 class="section-title">ゲスト出演</h2>
+    <div class="guest-card reveal" id="guestCard"><!-- JSで自動生成 --></div>
+  </div>
+</section>
+
+<!-- ================= OUTLINE ================= -->
+<section class="outline" id="outline">
+  <div class="section-inner">
+    <p class="eyebrow">Outline</p>
+    <h2 class="section-title">開催概要</h2>
+    <dl class="outline-table" id="outlineTable"><!-- JSで自動生成 --></dl>
+  </div>
+</section>
+
+<!-- ================= TICKET ================= -->
+<section class="ticket" id="ticket">
+  <div class="section-inner">
+    <p class="eyebrow">Ticket</p>
+    <h2 class="section-title">チケット</h2>
+    <div class="ticket-grid" id="ticketGrid"><!-- JSで自動生成 --></div>
+    <p class="ticket-note">
+      ※価格はすべて税込です。枚数制限・受付期間の詳細は各プレイガイドをご確認ください。
+    </p>
+  </div>
+</section>
+
+<!-- ================= GOODS ================= -->
+<section class="goods" id="goods">
+  <div class="section-inner">
+    <p class="eyebrow">Goods</p>
+    <h2 class="section-title">物販情報</h2>
+    <div class="goods-grid" id="goodsGrid"><!-- JSで自動生成 --></div>
+  </div>
+</section>
+
+<!-- ================= ATTENTION ================= -->
+<section class="attention" id="attention">
+  <div class="section-inner">
+    <p class="eyebrow">Attention</p>
+    <h2 class="section-title">注意事項</h2>
+    <ul class="attention-list" id="attentionList"><!-- JSで自動生成 --></ul>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <p class="footer-name" id="footerName">夢羽ヒメ</p>
+  <div class="sns-links">
+    <a href="#" id="linkX" aria-label="X" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-7l-5.5-7.2L4.5 22H1.4l8.1-9.3L.9 2h7.2l5 6.6L18.9 2Zm-1.2 18h1.7L7.4 4H5.6l12.1 16Z"/></svg>
+    </a>
+    <a href="#" id="linkYoutube" aria-label="YouTube" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.5v-7l6.3 3.5-6.3 3.5Z"/></svg>
+    </a>
+    <a href="#" id="linkLit" aria-label="lit.link" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 3 7v10l9 5 9-5V7l-9-5Zm0 2.3 6.8 3.8L12 12l-6.8-3.9L12 4.3ZM5 9.2l6 3.4v7L5 16.2v-7Zm8 10.4v-7l6-3.4v7l-6 3.4Z"/></svg>
+    </a>
+  </div>
+  <p class="footer-copy" id="footerCopy">&copy; 2026 Yumeha Hime Project. All Rights Reserved.</p>
+</footer>
+
+<!-- ================================================================
+     JavaScript
+     CONFIG に固有名詞・料金・リンク等の「変数」を集約しています。
+     内容を差し替えたい場合はこのオブジェクトのみを編集してください。
+     ================================================================ -->
+<script>
+"use strict";
+
+/* ---------------- 1. サイト全体の設定値（ここを編集） ---------------- */
+const CONFIG = {
+  vsingerName: "夢羽ヒメ",
+  liveTitle: "Miracle World",
+  liveCatch: "ここでしか見られない、奇跡の世界へ",
+  liveDateLabel: "2026.10.10 SAT",
+  liveVenueLabel: "LIVE SAPCE Q",
+
+  concept: {
+    lead: "初披露の3Dモデルで送る<br>1st ワンマンライブ",
+    body: "デビューから積み重ねてきた歌声と物語を、一夜だけのステージに。夢羽ヒメというひとりのVSingerが持つ「可憐さ」と「圧倒的な歌唱力」、そのコントラストを最も近い距離で体感できる時間をお届けします。ここでしか聴けないパフォーマンス、ぜひご体験ください。"
+  },
+
+  // ゲスト出演者情報（写真を使う場合は photo に画像パスを指定）
+  guest: {
+    role: "SPECIAL GUEST",
+    name: "春歌みこと",
+    desc: "シアーミュージックV所属　トップオブリア充を目指すVsinger",
+    comment: "",
+    photo: "" // 例: "images/guest-aoi.jpg"
+  },
+
+  // 開催概要（dt: 項目名 / dd: 内容 / note: 補足）
+  outline: [
+    { dt: "DATE",   dd: "2026年10月10日（土）", note: "開場 18:15 / 開演 19:15" },
+    { dt: "VENUE",  dd: "LIVE SPACE Q", note: "東京都千代田区外神田４丁目 4-3 SILビル 9F" },
+    { dt: "ACCESS", dd: "JR「秋葉原駅」電気街口より徒歩7分" },
+    { dt: "配信",    dd: "Bitfan にてアーカイブ配信あり", note: "配信視聴チケットは別途販売" }
+  ],
+
+  // チケット種別（featured: trueで「おすすめ」バッジ表示）
+  tickets: [
+    { name: "ロイヤルひめにてぃチケット", desc: "S席＆グッズ付き（直筆サイン入りポストカード含む）", price: "15,800", featured:true },
+    { name: "一般チケット", desc: "会場での通常観覧チケット。先行チケットの場合(7/10～7/29)直筆サイン入りポストカード付", price: "5,000", featured:false }
+  ],
+
+  // 物販グッズ（thumbLabelは画像未挿入時のプレースホルダー文言）
+  goods: [
+    { name: "ComminSoon", price: "0", thumbLabel:"IMG" }
+  ],
+
+  // 注意事項
+  attentions: [
+    ""
+  ],
+
+  // フッターSNSリンク（URLをご自身のアカウントに差し替えてください）
+  sns: {
+    x: "https://x.com/hime_yumeha",
+    youtube: "https://www.youtube.com/@hime.yumeha",
+    litlink: "https://lit.link/HimeYumeha"
+  },
+
+  copyrightYear: 2026,
+  projectName: ""
+};
+
+/* ---------------- 2. CONFIGをDOMへ反映 ---------------- */
+function renderText(){
+  document.title = `${CONFIG.vsingerName} ワンマンライブ「${CONFIG.liveTitle}」| 特設サイト`;
+
+  document.getElementById("navLogo").textContent = CONFIG.liveTitle;
+  document.getElementById("vsingerName").textContent = CONFIG.vsingerName;
+  document.getElementById("liveTitle").textContent = CONFIG.liveTitle;
+  document.getElementById("liveCatch").textContent = CONFIG.liveCatch;
+  document.getElementById("liveDate").textContent = CONFIG.liveDateLabel;
+  document.getElementById("liveVenue").textContent = CONFIG.liveVenueLabel;
+
+  document.getElementById("conceptLead").innerHTML = CONFIG.concept.lead;
+  document.getElementById("conceptBody").textContent = CONFIG.concept.body;
+
+  document.getElementById("footerName").textContent = CONFIG.vsingerName;
+  document.getElementById("footerCopy").textContent =
+    `© ${CONFIG.copyrightYear} ${CONFIG.projectName}. All Rights Reserved.`;
+
+  document.getElementById("linkX").href = CONFIG.sns.x;
+  document.getElementById("linkYoutube").href = CONFIG.sns.youtube;
+  document.getElementById("linkLit").href = CONFIG.sns.litlink;
+}
+
+/* ---------------- 3. ゲスト紹介カードの自動生成 ---------------- */
+function renderGuest(){
+  const g = CONFIG.guest;
+  const wrap = document.getElementById("guestCard");
+  const photoInner = g.photo
+    ? `<img src="${g.photo}" alt="${g.name}">`
+    : `<span>PHOTO</span>`;
+  wrap.innerHTML = `
+    <div class="guest-photo">${photoInner}</div>
+    <div class="guest-body">
+      <p class="guest-role">${g.role}</p>
+      <p class="guest-name">${g.name}</p>
+      <p class="guest-desc">${g.desc}</p>
+      <p class="guest-comment">${g.comment}</p>
+    </div>
+  `;
+}
+
+/* ---------------- 4. 開催概要テーブルの自動生成 ---------------- */
+function renderOutline(){
+  const wrap = document.getElementById("outlineTable");
+  wrap.innerHTML = CONFIG.outline.map(item => `
+    <div class="outline-row reveal">
+      <dt>${item.dt}</dt>
+      <dd>${item.dd}${item.note ? `<small>${item.note}</small>` : ""}</dd>
+    </div>
+  `).join("");
+}
+
+/* ---------------- 5. チケットカードの自動生成 ---------------- */
+function renderTickets(){
+  const wrap = document.getElementById("ticketGrid");
+  wrap.innerHTML = CONFIG.tickets.map(t => `
+    <div class="ticket-card reveal${t.featured ? " is-featured" : ""}">
+      <p class="ticket-name">${t.name}</p>
+      <p class="ticket-desc">${t.desc}</p>
+      <p class="ticket-price">¥${t.price}<span>（税込）</span></p>
+    </div>
+  `).join("");
+}
+
+/* ---------------- 6. 物販グッズの自動生成 ---------------- */
+function renderGoods(){
+  const wrap = document.getElementById("goodsGrid");
+  wrap.innerHTML = CONFIG.goods.map(g => `
+    <div class="goods-card reveal">
+      <div class="goods-thumb">${g.thumbLabel}</div>
+      <div class="goods-info">
+        <p class="name">${g.name}</p>
+        <p class="price">¥${g.price}</p>
+      </div>
+    </div>
+  `).join("");
+}
+
+/* ---------------- 7. 注意事項リストの自動生成 ---------------- */
+function renderAttention(){
+  const wrap = document.getElementById("attentionList");
+  wrap.innerHTML = CONFIG.attentions.map(text => `
+    <li class="reveal">${text}</li>
+  `).join("");
+}
+
+/* ---------------- 8. ハンバーガーメニュー開閉 ---------------- */
+function initNavToggle(){
+  const toggle = document.getElementById("navToggle");
+  const drawer = document.getElementById("navDrawer");
+  const scrim  = document.getElementById("navScrim");
+  const closeDrawer = () => { drawer.classList.remove("open"); scrim.classList.remove("open"); };
+  toggle.addEventListener("click", () => {
+    drawer.classList.toggle("open");
+    scrim.classList.toggle("open");
+  });
+  scrim.addEventListener("click", closeDrawer);
+  drawer.querySelectorAll("a").forEach(a => a.addEventListener("click", closeDrawer));
+}
+
+/* ---------------- 9. スクロール出現アニメーション ---------------- */
+function initReveal(){
+  const targets = document.querySelectorAll(".reveal");
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting){ e.target.classList.add("is-visible"); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15 });
+  targets.forEach(t => io.observe(t));
+}
+
+/* ---------------- 10. 星空背景（軽量Canvas描画） ---------------- */
+function initStarfield(){
+  const container = document.getElementById("stars");
+  const canvas = document.createElement("canvas");
+  container.appendChild(canvas);
+  const ctx = canvas.getContext("2d");
+  let stars = [];
+
+  function resize(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const count = Math.min(140, Math.floor((canvas.width * canvas.height) / 9000));
+    stars = Array.from({ length: count }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.4 + 0.3,
+      baseAlpha: Math.random() * 0.6 + 0.2,
+      phase: Math.random() * Math.PI * 2,
+      speed: Math.random() * 0.015 + 0.005,
+      gold: Math.random() < 0.15 // 一部を金色の星に
+    }));
+  }
+
+  let t = 0;
+  function draw(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    t += 1;
+    stars.forEach(s => {
+      const twinkle = Math.sin(t * s.speed + s.phase) * 0.35 + 0.65;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = s.gold
+        ? `rgba(216,177,104,${s.baseAlpha * twinkle})`
+        : `rgba(230,222,250,${s.baseAlpha * twinkle})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  window.addEventListener("resize", resize);
+
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (prefersReduced){
+    draw(); // 1フレームのみ静止描画
+  } else {
+    draw();
+  }
+}
+
+/* ---------------- 11. 漂う光の粒（天使の羽イメージ） ---------------- */
+function initFeathers(){
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (prefersReduced) return; // モーション低減設定時は省略
+
+  const count = window.innerWidth < 700 ? 8 : 14;
+  for (let i = 0; i < count; i++){
+    const f = document.createElement("div");
+    f.className = "feather";
+    f.style.left = `${Math.random() * 100}vw`;
+    f.style.animationDuration = `${14 + Math.random() * 10}s`;
+    f.style.animationDelay = `${Math.random() * -20}s`;
+    document.body.appendChild(f);
+  }
+}
+
+/* ---------------- 初期化 ---------------- */
+document.addEventListener("DOMContentLoaded", () => {
+  renderText();
+  renderGuest();
+  renderOutline();
+  renderTickets();
+  renderGoods();
+  renderAttention();
+  initNavToggle();
+  initReveal();
+  initStarfield();
+  initFeathers();
+});
+</script>
+
+</body>
+</html>
