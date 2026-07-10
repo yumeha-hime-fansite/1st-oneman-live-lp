@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>夢羽ヒメ 1stワンマンライブ「Miracle World」| 特設サイト</title>
-<meta name="description" content="夢羽ヒメ 1stワンマンライブ「Miracle World」特設サイト。日時・会場・チケット情報はこちら。">
+<title>夢羽ヒメ ワンマンライブ「Celestial Wing」| 特設サイト</title>
+<meta name="description" content="夢羽ヒメ ワンマンライブ「Celestial Wing」特設サイト。日時・会場・チケット情報はこちら。">
 
 <!-- ============================================================
      フォント読み込み（和文見出し用:Shippori Mincho / 本文用:Noto Sans JP）
@@ -313,6 +313,18 @@ h2.section-title{
 }
 .attention-list li::before{ content:'✦'; color:var(--gold); flex-shrink:0; }
 
+/* ---------------- DISCLAIMER ---------------- */
+.disclaimer{ padding:48px 0 8px; }
+.disclaimer-list{ display:flex; flex-direction:column; gap:8px; }
+.disclaimer-list li{
+  font-size:11.5px; line-height:1.9; color:var(--text-sub); opacity:0.85;
+}
+.disclaimer-contact{
+  margin-top:22px; font-size:12px; color:var(--text-sub);
+}
+.disclaimer-contact a{ color:var(--lavender); text-decoration:underline; text-underline-offset:3px; }
+.disclaimer-contact a:hover{ color:var(--gold-bright); }
+
 /* ---------------- FOOTER ---------------- */
 footer{
   padding:70px 20px 40px; text-align:center; position:relative; z-index:2;
@@ -371,7 +383,7 @@ footer{
 <!-- ================= TOP ================= -->
 <section class="hero" id="top">
   <div class="hero-halo"></div>
-  <p class="hero-eyebrow">ONEMAN LIVE</p>
+  <p class="hero-eyebrow">1st ONEMAN LIVE</p>
   <p class="hero-name" id="vsingerName">夢羽ヒメ</p>
 
   <!-- ライブメインビジュアル差し込み枠（1920×1080 / 16:9 想定）：
@@ -380,10 +392,10 @@ footer{
     <span class="placeholder-label"><img src="https://www.dropbox.com/scl/fi/8jknj02o5403amtejhrmm/95b540d6735c1f76.png?rlkey=w0fds0o0ecyu2zb3ecxdmo730&st=s5vfmfqf&raw=1" alt="夢羽ヒメ1stライブメイン画像"></span>
   </div>
 
-  <h1 class="hero-title" id="liveTitle">Miracle World</h1>
-  <p class="hero-sub" id="liveCatch">ここでしか見られない、奇跡の世界へ</p>
-  <p class="hero-date" id="liveDate">2026.10.10 SAT</p>
-  <p class="hero-venue" id="liveVenue">LIVE SPACE Q</p>
+  <h1 class="hero-title" id="liveTitle">Celestial Wing</h1>
+  <p class="hero-sub" id="liveCatch">羽ばたきは、まだ止まらない。</p>
+  <p class="hero-date" id="liveDate">2026.10.18 SUN</p>
+  <p class="hero-venue" id="liveVenue">品川インターシティホール</p>
 
   <a href="#ticket" class="btn btn-primary">チケット情報を見る</a>
 
@@ -395,14 +407,15 @@ footer{
   <div class="section-inner">
     <p class="eyebrow">Concept</p>
     <p class="concept-lead" id="conceptLead">
-      初披露の3Dモデルで送る<br>1st ワンマンライブ
+      小さな声も、大きな歌声も。<br>全部が、彼女の翼になる。
     </p>
     <div class="divider"></div>
     <p class="concept-body" id="conceptBody">
       デビューから積み重ねてきた歌声と物語を、一夜だけのステージに。
       夢羽ヒメというひとりのVSingerが持つ「可憐さ」と「圧倒的な歌唱力」、
-      そのコントラストを最も近い距離で体感できます。
-      ここでしか聴けないパフォーマンス、ぜひご体験ください。
+      そのコントラストを最も近い距離で体感できる時間をお届けします。
+      ここでしか聴けないアレンジ、ここでしか見られない表情。
+      あなたの記憶に残る一夜になりますように。
     </p>
   </div>
 </section>
@@ -432,7 +445,8 @@ footer{
     <h2 class="section-title">チケット</h2>
     <div class="ticket-grid" id="ticketGrid"><!-- JSで自動生成 --></div>
     <p class="ticket-note">
-      ※価格はすべて税込です。枚数制限・受付期間の詳細は各プレイガイドをご確認ください。
+      ※価格はすべて税込です。受付期間の詳細は各プレイガイドをご確認ください。<br>
+      ※クリックすると、チケット販売ページに遷移します。
     </p>
   </div>
 </section>
@@ -455,9 +469,19 @@ footer{
   </div>
 </section>
 
+<!-- ================= DISCLAIMER（非公式サイト表記・お問い合わせ） ================= -->
+<section class="disclaimer" id="disclaimer">
+  <div class="section-inner">
+    <ul class="disclaimer-list" id="disclaimerList"><!-- JSで自動生成 --></ul>
+    <p class="disclaimer-contact">
+      お問い合わせ：<a href="#" id="contactEmailLink"></a>
+    </p>
+  </div>
+</section>
+
 <!-- ================= FOOTER ================= -->
 <footer>
-  <p class="footer-name" id="footerName">夢羽ヒメ</p>
+  <p class="footer-name" id="footerName">夢羽ヒメ公式SNS等</p>
   <div class="sns-links">
     <a href="#" id="linkX" aria-label="X" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-7l-5.5-7.2L4.5 22H1.4l8.1-9.3L.9 2h7.2l5 6.6L18.9 2Zm-1.2 18h1.7L7.4 4H5.6l12.1 16Z"/></svg>
@@ -469,7 +493,7 @@ footer{
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 3 7v10l9 5 9-5V7l-9-5Zm0 2.3 6.8 3.8L12 12l-6.8-3.9L12 4.3ZM5 9.2l6 3.4v7L5 16.2v-7Zm8 10.4v-7l6-3.4v7l-6 3.4Z"/></svg>
     </a>
   </div>
-  <p class="footer-copy" id="footerCopy">&copy; © 2026 Unofficial Fan Site for Yumeha Hime.</p>
+  <p class="footer-copy" id="footerCopy">&copy; 2026 Yumeha Hime Project. All Rights Reserved.</p>
 </footer>
 
 <!-- ================================================================
@@ -497,14 +521,14 @@ const CONFIG = {
   guest: {
     role: "SPECIAL GUEST",
     name: "春歌みこと",
-    desc: "シアーミュージックV所属　トップオブリア充を目指すVsinger",
+    desc: "シアーミュージックV所属　トップオブリア充を目指すVsinger。エネルギッシュで元気あふれる歌声が魅力。",
     comment: "",
     photo: "" // 例: "images/guest-aoi.jpg"
   },
 
   // 開催概要（dt: 項目名 / dd: 内容 / note: 補足）
   outline: [
-    { dt: "DATE",   dd: "2026年10月10日（土）", note: "開場 18:15 / 開演 19:15" },
+    { dt: "DATE",   dd: "2026年10月10日（土）", note: "開場 18:15 / 開演 19:15 / 終演20:45（予定）" },
     { dt: "VENUE",  dd: "LIVE SPACE Q", note: "東京都千代田区外神田４丁目 4-3 SILビル 9F" },
     { dt: "ACCESS", dd: "JR「秋葉原駅」電気街口より徒歩7分" },
     { dt: "配信",    dd: "Bitfan にてアーカイブ配信あり", note: "配信視聴チケットは別途販売" }
@@ -512,7 +536,7 @@ const CONFIG = {
 
   // チケット種別（featured: trueで「おすすめ」バッジ表示）
   tickets: [
-    { name: "ロイヤルひめにてぃチケット", desc: "S席＆グッズ付き（直筆サイン入りポストカード含む）", price: "15,000", featured:true },
+    { name: "ロイヤルひめにてぃチケット", desc: "S席＆グッズ付き（直筆サイン入りTシャツ、直筆色紙、直筆サイン入りポストカード）", price: "15,000", featured:true },
     { name: "一般チケット", desc: "会場での通常観覧チケット。先行チケットの場合(7/10～7/29)直筆サイン入りポストカード付", price: "5,000", featured:false }
   ],
 
@@ -523,8 +547,30 @@ const CONFIG = {
 
   // 注意事項
   attentions: [
-    ""
+    "抽選販売の時点で定員に達した場合は、先着販売及び当日券の販売無し",
+    "コンビニ決済の場合は、各コンビニへのお支払いで別途440円の手数料、配信チケットの場合、システム手数料として別途220円発生します",
+    "ワンドリンク制です",
+    "スマートフォンも含めて、撮影・収録などはいっさい禁止です",
+    "当ビル９階に待合室が無いため、開場前および終演後は９階まで上がることはできません",
+    "入場時、スタッフによるお客様の手荷物チェック・金属探知機でのチェックがあります",
+    "入場時、身分証の確認があります",
+    "ペットボトルなどの飲料は持込禁止です",
+    "折って光らせるタイプのサイリウムの使用は禁止です",
+    "プレゼントボックスの設置は無いため、出演者へのプレゼントはお控えください。※お手紙のみ受け付けがあります",
+    "当日は受付にて手荷物チェックを行う関係上、整理番号順にお時間を区切ってご入場となります",
+    "他の注意事項は、プレイガイドの注意事項をご確認ください"
   ],
+
+  // 非公式サイト表記・著作権に関する注意書き
+  disclaimers: [
+    "※本サイトは、VSinger 夢羽ヒメさんを応援するための非公式ファンサイトです。本人および関係者各位とは一切関係ありません。",
+    "※本サイトに掲載している画像は、関係各所より掲載許可を得たものを使用しています。無断転載・二次利用はご遠慮ください。",
+    "※掲載されている画像等の著作権・肖像権は、それぞれの権利者に帰属します。本サイトは権利侵害を目的としたものではありません。",
+    "※掲載内容に問題がある場合は、削除・修正等、速やかに対応いたします。下記メールアドレスよりご連絡ください。"
+  ],
+
+  // 問い合わせ先メールアドレス（ご自身のアドレスに差し替えてください）
+  contactEmail: "amagase.sui@gmail.com",
 
   // フッターSNSリンク（URLをご自身のアカウントに差し替えてください）
   sns: {
@@ -534,7 +580,7 @@ const CONFIG = {
   },
 
   copyrightYear: 2026,
-  projectName: ""
+  projectName: "Unofficial Fan Site for Yumeha Hime"
 };
 
 /* ---------------- 2. CONFIGをDOMへ反映 ---------------- */
@@ -568,7 +614,7 @@ function renderGuest(){
     ? `<img src="${g.photo}" alt="${g.name}">`
     : `<span>PHOTO</span>`;
   wrap.innerHTML = `
-    <div class="guest-photo">${photoInner}</div>
+    <!-- <div class="guest-photo">${photoInner}</div> -->
     <div class="guest-body">
       <p class="guest-role">${g.role}</p>
       <p class="guest-name">${g.name}</p>
@@ -576,6 +622,7 @@ function renderGuest(){
       <p class="guest-comment">${g.comment}</p>
     </div>
   `;
+    // 画像を使う場合は上記のコメントアウトを外してください
 }
 
 /* ---------------- 4. 開催概要テーブルの自動生成 ---------------- */
@@ -593,11 +640,13 @@ function renderOutline(){
 function renderTickets(){
   const wrap = document.getElementById("ticketGrid");
   wrap.innerHTML = CONFIG.tickets.map(t => `
+    <a href="https://jcm-event.bitfan.id/events/21090" class="ticket-card-link">
     <div class="ticket-card reveal${t.featured ? " is-featured" : ""}">
       <p class="ticket-name">${t.name}</p>
       <p class="ticket-desc">${t.desc}</p>
       <p class="ticket-price">¥${t.price}<span>（税込）</span></p>
     </div>
+    </a>
   `).join("");
 }
 
@@ -623,7 +672,17 @@ function renderAttention(){
   `).join("");
 }
 
-/* ---------------- 8. ハンバーガーメニュー開閉 ---------------- */
+/* ---------------- 8. 非公式サイト表記・問い合わせ先の自動生成 ---------------- */
+function renderDisclaimer(){
+  const list = document.getElementById("disclaimerList");
+  list.innerHTML = CONFIG.disclaimers.map(text => `<li>${text}</li>`).join("");
+
+  const emailLink = document.getElementById("contactEmailLink");
+  emailLink.textContent = CONFIG.contactEmail;
+  emailLink.href = `mailto:${CONFIG.contactEmail}`;
+}
+
+/* ---------------- 9. ハンバーガーメニュー開閉 ---------------- */
 function initNavToggle(){
   const toggle = document.getElementById("navToggle");
   const drawer = document.getElementById("navDrawer");
@@ -637,7 +696,7 @@ function initNavToggle(){
   drawer.querySelectorAll("a").forEach(a => a.addEventListener("click", closeDrawer));
 }
 
-/* ---------------- 9. スクロール出現アニメーション ---------------- */
+/* ---------------- 10. スクロール出現アニメーション ---------------- */
 function initReveal(){
   const targets = document.querySelectorAll(".reveal");
   const io = new IntersectionObserver((entries) => {
@@ -648,7 +707,7 @@ function initReveal(){
   targets.forEach(t => io.observe(t));
 }
 
-/* ---------------- 10. 星空背景（軽量Canvas描画） ---------------- */
+/* ---------------- 11. 星空背景（軽量Canvas描画） ---------------- */
 function initStarfield(){
   const container = document.getElementById("stars");
   const canvas = document.createElement("canvas");
@@ -698,7 +757,7 @@ function initStarfield(){
   }
 }
 
-/* ---------------- 11. 漂う光の粒（天使の羽イメージ） ---------------- */
+/* ---------------- 12. 漂う光の粒（天使の羽イメージ） ---------------- */
 function initFeathers(){
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (prefersReduced) return; // モーション低減設定時は省略
@@ -722,6 +781,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderTickets();
   renderGoods();
   renderAttention();
+  renderDisclaimer();
   initNavToggle();
   initReveal();
   initStarfield();
