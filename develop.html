@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>夢羽ヒメ 1stワンマンライブ「Miracle World」| 非公式特設サイト</title>
+  <meta name="description" content="夢羽ヒメ 1stワンマンライブ「Miracle World」非公式特設サイト。日時・会場・チケット情報はこちら。">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;800&family=Noto+Sans+JP:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg-void:#0a0716;
+      --bg-nebula-1:#241238;
+      --bg-nebula-2:#3d1f63;
+      --bg-nebula-3:#1a0f2e;
+      --lavender:#b6a3e8;
+      --lavender-soft:#e2d9f7;
+      --lavender-deep:#7a63b8;
+      --gold:#d8b168;
+      --gold-bright:#f3daa0;
+      --text-main:#f5f1fb;
+      --text-sub:#b6acd1;
+      --panel-bg:rgba(255,255,255,.045);
+      --panel-border:rgba(214,190,255,.18);
+      --font-display:'Shippori Mincho', serif;
+      --font-body:'Noto Sans JP', sans-serif;
+      --font-en:'Cormorant Garamond', serif;
+      --max-width:1080px;
+      --radius-l:22px;
+      --radius-m:14px;
+      --space-section:clamp(64px,10vw,120px);
+    }
+
+    *,*::before,*::after{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    html{scroll-behavior:smooth;}
+
+    body{
+      background:var(--bg-void);
+      color:var(--text-main);
+      font-family:var(--font-body);
+      line-height:1.85;
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    img{max-width:100%;display:block;}
+    a{color:inherit;text-decoration:none;}
+    ul{list-style:none;}
+    section{position:relative;z-index:2;}
+
+    .cosmos{
+      position:fixed;
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+      background:
+        radial-gradient(ellipse 70% 50% at 20% 15%,rgba(122,99,184,.35),transparent 60%),
+        radial-gradient(ellipse 60% 45% at 85% 25%,rgba(216,177,104,.12),transparent 60%),
+        radial-gradient(ellipse 80% 60% at 50% 90%,rgba(61,31,99,.55),transparent 65%),
+        linear-gradient(180deg,var(--bg-void) 0%,var(--bg-nebula-3) 40%,var(--bg-void) 100%);
+    }
+
+    #stars{
+      position:fixed;
+      inset:0;
+      z-index:1;
+      pointer-events:none;
+    }
+
+    #stars canvas{
+      width:100%;
+      height:100%;
+      display:block;
+    }
+
+    header.nav{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      z-index:50;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:16px clamp(16px,4vw,48px);
+      background:linear-gradient(180deg,rgba(10,7,22,.9),rgba(10,7,22,.25),transparent);
+      backdrop-filter:blur(8px);
+    }
+
+    .nav-logo{
+      font-family:var(--font-display);
+      font-size:15px;
+      letter-spacing:.08em;
+      color:var(--lavender-soft);
+    }
+
+    .nav-links{
+      display:none;
+      gap:28px;
+      font-size:13px;
+      letter-spacing:.08em;
+    }
+
+    .nav-links a{
+      color:var(--text-sub);
+      transition:color .25s;
+    }
+
+    .nav-links a:hover{color:var(--gold-bright);}
+
+    .nav-toggle{
+      display:flex;
+      flex-direction:column;
+      gap:5px;
+      background:none;
+      border:none;
+      cursor:pointer;
+      padding:6px;
+    }
+
+    .nav-toggle span{
+      width:22px;
+      height:1.5px;
+      background:var(--lavender-soft);
+    }
+
+    .nav-drawer{
+      position:fixed;
+      inset:0 0 0 auto;
+      width:70%;
+      max-width:280px;
+      z-index:60;
+      background:linear-gradient(180deg,var(--bg-nebula-1),var(--bg-void));
+      border-left:1px solid var(--panel-border);
+      padding:80px 32px;
+      display:flex;
+      flex-direction:column;
+      gap:26px;
+      transform:translateX(100%);
+      transition:transform .4s ease;
+    }
+
+    .nav-drawer.open{transform:translateX(0);}
+
+    .nav-drawer a{
+      font-size:15px;
+      color:var(--text-sub);
+      letter-spacing:.08em;
+    }
+
+    .nav-scrim{
+      position:fixed;
+      inset:0;
+      z-index:55;
+      background:rgba(0,0,0,.55);
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .3s;
+    }
+
+    .nav-scrim.open{
+      opacity:1;
+      pointer-events:auto;
+    }
+
+    .section-inner{
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:0 clamp(20px,5vw,40px);
+    }
+
+    .eyebrow{
+      font-family:var(--font-en);
+      font-style:italic;
+      letter-spacing:.18em;
+      color:var(--gold);
+      font-size:14px;
+      text-transform:uppercase;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:14px;
+    }
+
+    .eyebrow::before{
+      content:'';
+      width:28px;
+      height:1px;
+      background:var(--gold);
+    }
+
+    h2.section-title{
+      font-family:var(--font-display);
+      font-weight:700;
+      font-size:clamp(28px,5vw,42px);
+      color:var(--lavender-soft);
+      margin-bottom:36px;
+      letter-spacing:.04em;
+    }
+
+    .hero{
+      min-height:100svh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:108px 20px 64px;
+      position:relative;
+    }
+
+    .hero-halo{
+      position:absolute;
+      top:50%;
+      left:50%;
+      width:min(90vw,620px);
+      aspect-ratio:1;
+      transform:translate(-50%,-50%);
+      background:radial-gradient(circle,rgba(216,177,104,.16),rgba(182,163,232,.08) 45%,transparent 70%);
+      border-radius:50%;
+      z-index:-1;
+      animation:halo-pulse 7s ease-in-out infinite;
+    }
+
+    @keyframes halo-pulse{
+      0%,100%{opacity:.7;transform:translate(-50%,-50%) scale(1);}
+      50%{opacity:1;transform:translate(-50%,-50%) scale(1.06);}
+    }
+
+    .hero-eyebrow{
+      font-family:var(--font-en);
+      font-style:italic;
+      letter-spacing:.25em;
+      color:var(--gold-bright);
+      font-size:14px;
+      margin-bottom:10px;
+    }
+
+    .hero-name{
+      font-family:var(--font-display);
+      font-size:clamp(15px,3vw,18px);
+      color:var(--lavender-soft);
+      letter-spacing:.15em;
+      margin-bottom:16px;
+    }
+
+    .hero-visual{
+      width:min(92vw,720px);
+      aspect-ratio:16/9;
+      margin:0 auto 30px;
+      border-radius:var(--radius-l);
+      border:1px solid var(--panel-border);
+      background:linear-gradient(160deg,rgba(182,163,232,.15),rgba(216,177,104,.08)),var(--bg-nebula-1);
+      box-shadow:0 0 60px rgba(182,163,232,.25),0 0 0 1px rgba(255,255,255,.03) inset;
+      overflow:hidden;
+    }
+
+    .hero-visual img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .hero-title{
+      font-family:var(--font-display);
+      font-weight:800;
+      letter-spacing:.06em;
+      font-size:clamp(32px,8vw,60px);
+      line-height:1.25;
+      background:linear-gradient(100deg,var(--lavender-soft) 20%,var(--gold-bright) 55%,var(--lavender-soft) 85%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      margin:6px 0 12px;
+    }
+
+    .hero-sub{
+      color:var(--text-sub);
+      font-size:14px;
+      letter-spacing:.04em;
+      margin-bottom:24px;
+    }
+
+    .hero-date{
+      font-family:var(--font-en);
+      font-size:clamp(19px,3vw,23px);
+      letter-spacing:.06em;
+      color:var(--gold);
+      margin-bottom:4px;
+    }
+
+    .hero-venue{
+      font-size:14px;
+      color:var(--text-sub);
+      margin-bottom:24px;
+    }
+
+    .ticket-deadline-box{
+      width:min(92vw,520px);
+      margin:0 auto 20px;
+      padding:17px 20px;
+      border:1px solid rgba(243,218,160,.72);
+      border-radius:var(--radius-m);
+      background:
+        linear-gradient(135deg,rgba(216,177,104,.17),rgba(122,99,184,.22));
+      box-shadow:
+        0 0 28px rgba(216,177,104,.15),
+        inset 0 0 20px rgba(255,255,255,.025);
+    }
+
+    .ticket-deadline-label{
+      color:var(--gold-bright);
+      font-size:13px;
+      font-weight:700;
+      letter-spacing:.12em;
+      margin-bottom:3px;
+    }
+
+    .ticket-deadline-date{
+      color:var(--text-main);
+      font-family:var(--font-display);
+      font-size:clamp(20px,5vw,27px);
+      font-weight:800;
+      line-height:1.5;
+    }
+
+    .ticket-deadline-date strong{
+      color:var(--gold-bright);
+      font-size:1.12em;
+    }
+
+    .ticket-deadline-note{
+      margin-top:3px;
+      color:var(--text-sub);
+      font-size:12px;
+    }
+
+    .hero-ticket-actions{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:12px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      justify-content:center;
+      padding:15px 38px;
+      border-radius:999px;
+      font-size:14px;
+      letter-spacing:.08em;
+      font-weight:500;
+      border:1px solid transparent;
+      cursor:pointer;
+      transition:transform .25s,box-shadow .25s;
+    }
+
+    .btn-primary{
+      width:min(88vw,340px);
+      background:linear-gradient(100deg,var(--gold) 0%,var(--gold-bright) 50%,var(--gold) 100%);
+      color:#231334;
+      font-weight:700;
+      box-shadow:0 8px 30px rgba(216,177,104,.3);
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-2px);
+      box-shadow:0 12px 34px rgba(216,177,104,.45);
+    }
+
+    .btn-arrow{
+      font-size:17px;
+      transition:transform .25s;
+    }
+
+    .btn-primary:hover .btn-arrow{transform:translateX(3px);}
+
+    .hero-ticket-detail-link{
+      color:var(--lavender-soft);
+      font-size:13px;
+      text-decoration:underline;
+      text-underline-offset:5px;
+      transition:color .25s;
+    }
+
+    .hero-ticket-detail-link:hover{color:var(--gold-bright);}
+
+    .scroll-cue{
+      margin-top:38px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:8px;
+      color:var(--text-sub);
+      font-family:var(--font-en);
+      font-size:10px;
+      letter-spacing:.18em;
+    }
+
+    .scroll-cue .line{
+      width:1px;
+      height:42px;
+      background:linear-gradient(var(--gold),transparent);
+    }
+
+
+
+    /* ---------------- FAN MESSAGE / 見届けたい理由 ---------------- */
+    .fan-message{
+      padding:var(--space-section) 0;
+    }
+
+    .fan-message-card{
+      max-width:820px;
+      margin:0 auto;
+      padding:clamp(28px,6vw,56px);
+      border:1px solid rgba(243,218,160,.28);
+      border-radius:var(--radius-l);
+      background:
+        linear-gradient(145deg,rgba(182,163,232,.08),rgba(216,177,104,.06)),
+        rgba(255,255,255,.025);
+      box-shadow:0 18px 50px rgba(0,0,0,.18);
+    }
+
+    .fan-message-title{
+      font-family:var(--font-display);
+      font-size:clamp(27px,5vw,42px);
+      line-height:1.5;
+      color:var(--lavender-soft);
+      text-align:center;
+      letter-spacing:.04em;
+      margin-bottom:26px;
+    }
+
+    .fan-message-title::after{
+      content:'';
+      display:block;
+      width:72px;
+      height:1px;
+      margin:20px auto 0;
+      background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    }
+
+    .fan-message-body{
+      max-width:680px;
+      margin:0 auto;
+      color:var(--text-sub);
+      font-size:clamp(14px,2.5vw,16px);
+      line-height:2;
+    }
+
+    .fan-message-body p + p{
+      margin-top:16px;
+    }
+
+    .fan-message-quote{
+      color:var(--text-main);
+      font-family:var(--font-display);
+      font-size:clamp(17px,3.5vw,22px);
+      line-height:1.8;
+      text-align:center;
+    }
+
+    .fan-message-emphasis{
+      color:var(--gold-bright);
+      font-weight:700;
+    }
+
+    .fan-message-closing{
+      margin-top:24px !important;
+      padding-top:22px;
+      border-top:1px solid var(--panel-border);
+      color:var(--text-main);
+      text-align:center;
+    }
+
+    .concept,
+    .guest,
+    .outline,
+    .ticket,
+    .goods,
+    .attention,
+    .disclaimer{
+      padding:var(--space-section) 0;
+    }
+
+    .concept-lead{
+      font-family:var(--font-display);
+      font-size:clamp(24px,5vw,40px);
+      line-height:1.65;
+      color:var(--lavender-soft);
+      text-align:center;
+    }
+
+    .divider{
+      width:72px;
+      height:1px;
+      margin:34px auto;
+      background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    }
+
+    .concept-body{
+      max-width:760px;
+      margin:0 auto;
+      color:var(--text-sub);
+    }
+
+    .guest-card,
+    .ticket-card,
+    .goods-card{
+      border:1px solid var(--panel-border);
+      border-radius:var(--radius-l);
+      background:var(--panel-bg);
+      backdrop-filter:blur(8px);
+    }
+
+    .guest-card{
+      max-width:760px;
+      margin:0 auto;
+      padding:clamp(26px,5vw,48px);
+      text-align:center;
+    }
+
+    .guest-role{
+      color:var(--gold);
+      font-family:var(--font-en);
+      letter-spacing:.2em;
+      font-size:13px;
+      margin-bottom:8px;
+    }
+
+    .guest-name{
+      font-family:var(--font-display);
+      color:var(--lavender-soft);
+      font-size:clamp(26px,5vw,38px);
+      margin-bottom:14px;
+    }
+
+    .guest-desc{
+      color:var(--text-sub);
+      max-width:600px;
+      margin:0 auto;
+    }
+
+    .outline-table{
+      border-top:1px solid var(--panel-border);
+    }
+
+    .outline-row{
+      display:grid;
+      grid-template-columns:90px 1fr;
+      gap:18px;
+      padding:20px 0;
+      border-bottom:1px solid var(--panel-border);
+    }
+
+    .outline-row dt{
+      color:var(--gold);
+      font-family:var(--font-en);
+      letter-spacing:.1em;
+    }
+
+    .outline-row dd{
+      color:var(--text-main);
+    }
+
+    .outline-row small{
+      display:block;
+      color:var(--text-sub);
+      margin-top:4px;
+    }
+
+    .ticket .ticket-deadline-box{
+      margin:0 0 30px;
+      text-align:center;
+    }
+
+    .ticket-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:20px;
+    }
+
+    .ticket-card-link{
+      display:block;
+      height:100%;
+    }
+
+    .ticket-card{
+      position:relative;
+      height:100%;
+      padding:28px 24px;
+      transition:transform .25s,border-color .25s,box-shadow .25s;
+    }
+
+    .ticket-card-link:hover .ticket-card{
+      transform:translateY(-4px);
+      border-color:rgba(243,218,160,.55);
+      box-shadow:0 14px 38px rgba(0,0,0,.22);
+    }
+
+    .ticket-card.is-featured{
+      border-color:rgba(243,218,160,.58);
+      background:linear-gradient(145deg,rgba(216,177,104,.11),rgba(122,99,184,.09));
+    }
+
+    .ticket-badge{
+      display:inline-block;
+      margin-bottom:13px;
+      padding:4px 10px;
+      border-radius:999px;
+      background:rgba(216,177,104,.16);
+      color:var(--gold-bright);
+      font-size:11px;
+      font-weight:700;
+      letter-spacing:.08em;
+    }
+
+    .ticket-name{
+      color:var(--lavender-soft);
+      font-family:var(--font-display);
+      font-size:21px;
+      margin-bottom:12px;
+    }
+
+    .ticket-desc{
+      color:var(--text-sub);
+      font-size:14px;
+    }
+
+    .ticket-price{
+      margin-top:18px;
+      color:var(--gold-bright);
+      font-family:var(--font-en);
+      font-size:34px;
+      line-height:1.2;
+    }
+
+    .ticket-price span{
+      margin-left:5px;
+      color:var(--text-sub);
+      font-family:var(--font-body);
+      font-size:12px;
+    }
+
+    .ticket-card-cta{
+      margin-top:18px;
+      color:var(--gold-bright);
+      font-size:13px;
+      font-weight:700;
+      letter-spacing:.05em;
+    }
+
+    .ticket-note{
+      margin-top:24px;
+      color:var(--text-sub);
+      font-size:12px;
+    }
+
+    .goods-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:20px;
+    }
+
+    .goods-card{
+      overflow:hidden;
+    }
+
+    .goods-thumb{
+      min-height:180px;
+      display:grid;
+      place-items:center;
+      color:var(--text-sub);
+      background:linear-gradient(145deg,rgba(182,163,232,.12),rgba(216,177,104,.06));
+    }
+
+    .goods-info{
+      padding:20px;
+    }
+
+    .goods-info .name{
+      color:var(--lavender-soft);
+      font-family:var(--font-display);
+      font-size:20px;
+    }
+
+    .goods-info .price{
+      color:var(--gold);
+      margin-top:5px;
+    }
+
+    .attention-list{
+      display:grid;
+      gap:12px;
+    }
+
+    .attention-list li{
+      padding:15px 18px;
+      border-left:2px solid var(--lavender-deep);
+      background:rgba(255,255,255,.025);
+      color:var(--text-sub);
+      font-size:13px;
+    }
+
+    .disclaimer{
+      border-top:1px solid var(--panel-border);
+      padding-top:50px;
+      padding-bottom:50px;
+    }
+
+    .disclaimer-list{
+      display:grid;
+      gap:7px;
+      color:var(--text-sub);
+      font-size:11px;
+    }
+
+    .disclaimer-contact{
+      margin-top:14px;
+      color:var(--text-sub);
+      font-size:11px;
+    }
+
+    .disclaimer-contact a{
+      color:var(--lavender-soft);
+      text-decoration:underline;
+      text-underline-offset:3px;
+    }
+
+    footer{
+      position:relative;
+      z-index:2;
+      padding:42px 20px;
+      text-align:center;
+      border-top:1px solid var(--panel-border);
+    }
+
+    .footer-name{
+      color:var(--lavender-soft);
+      font-family:var(--font-display);
+      margin-bottom:15px;
+    }
+
+    .sns-links{
+      display:flex;
+      justify-content:center;
+      gap:20px;
+      margin-bottom:18px;
+    }
+
+    .sns-links a{
+      width:42px;
+      height:42px;
+      display:grid;
+      place-items:center;
+      border:1px solid var(--panel-border);
+      border-radius:50%;
+      color:var(--lavender-soft);
+      transition:border-color .25s,color .25s,transform .25s;
+    }
+
+    .sns-links a:hover{
+      border-color:var(--gold);
+      color:var(--gold-bright);
+      transform:translateY(-2px);
+    }
+
+    .sns-links svg{
+      width:20px;
+      height:20px;
+    }
+
+    .footer-copy{
+      color:var(--text-sub);
+      font-size:10px;
+    }
+
+    .reveal{
+      opacity:0;
+      transform:translateY(18px);
+      transition:opacity .7s ease,transform .7s ease;
+    }
+
+    .reveal.is-visible{
+      opacity:1;
+      transform:none;
+    }
+
+    @media(min-width:760px){
+      .nav-links{display:flex;}
+      .nav-toggle{display:none;}
+      .ticket-grid{grid-template-columns:repeat(2,1fr);}
+      .goods-grid{grid-template-columns:repeat(3,1fr);}
+      .outline-row{grid-template-columns:140px 1fr;}
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:.01ms !important;
+      }
+      html{scroll-behavior:auto;}
+      .reveal{opacity:1;transform:none;}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="cosmos"></div>
+  <div id="stars"></div>
+
+  <header class="nav">
+    <a href="#top" class="nav-logo">Miracle World</a>
+
+    <nav class="nav-links" aria-label="メインメニュー">
+      <a href="#concept">CONCEPT</a>
+      <a href="#outline">OUTLINE</a>
+      <a href="#ticket">TICKET</a>
+      <a href="#goods">GOODS</a>
+      <a href="#attention">ATTENTION</a>
+    </nav>
+
+    <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="nav-scrim" id="navScrim"></div>
+
+  <nav class="nav-drawer" id="navDrawer" aria-label="スマートフォンメニュー">
+    <a href="#concept">CONCEPT</a>
+    <a href="#outline">OUTLINE</a>
+    <a href="#ticket">TICKET</a>
+    <a href="#goods">GOODS</a>
+    <a href="#attention">ATTENTION</a>
+  </nav>
+
+  <main>
+    <section class="hero" id="top">
+      <div class="hero-halo"></div>
+
+      <p class="hero-eyebrow">1st ONEMAN LIVE</p>
+      <p class="hero-name">夢羽ヒメ</p>
+
+      <div class="hero-visual">
+        <img
+          src="https://www.dropbox.com/scl/fi/8jknj02o5403amtejhrmm/95b540d6735c1f76.png?rlkey=w0fds0o0ecyu2zb3ecxdmo730&st=s5vfmfqf&raw=1"
+          alt="夢羽ヒメ 1stワンマンライブ メインビジュアル"
+        >
+      </div>
+
+      <h1 class="hero-title">Miracle World</h1>
+      <p class="hero-sub">ここでしか見られない、奇跡の世界へ</p>
+      <p class="hero-date">2026.10.10 SAT</p>
+      <p class="hero-venue">LIVE SPACE Q</p>
+
+      <div class="ticket-deadline-box" aria-label="先行抽選受付期間">
+        <p class="ticket-deadline-label">先行抽選受付中</p>
+        <p class="ticket-deadline-date">
+          申込締切 <strong>7月29日（水）</strong>
+        </p>
+        <p class="ticket-deadline-note">
+          抽選受付の詳細は公式チケットページをご確認ください
+        </p>
+      </div>
+
+      <div class="hero-ticket-actions">
+        <a
+          href="https://jcm-event.bitfan.id/events/21090"
+          class="btn btn-primary"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          先行抽選に申し込む
+          <span class="btn-arrow" aria-hidden="true">→</span>
+        </a>
+
+        <a href="#ticket" class="hero-ticket-detail-link">
+          チケットの種類・特典を確認する
+        </a>
+      </div>
+
+      <div class="scroll-cue">
+        <span>SCROLL</span>
+        <span class="line"></span>
+      </div>
+    </section>
+
+
+
+    <!-- ================= FAN MESSAGE ================= -->
+    <section class="fan-message" id="fan-message">
+      <div class="section-inner">
+        <article class="fan-message-card reveal">
+          <h2 class="fan-message-title">この日だからこそ、見届けたい。</h2>
+
+          <div class="fan-message-body">
+            <p>
+              夢羽ヒメさんにとって、初めてのワンマンライブ。<br>
+              そして、初披露となる3Dライブ。
+            </p>
+
+            <p>
+              これまで歌枠やリアルライブで積み重ねてきた努力や想いが、
+              一つのステージとして形になる特別な一日です。
+            </p>
+
+            <p class="fan-message-quote">
+              「リアルライブは初めて」<br>
+              「一人で参加するのは少し不安」
+            </p>
+
+            <p>
+              そんな方でも、歌を楽しむだけで十分楽しめると思います。
+            </p>
+
+            <p class="fan-message-quote">
+              「いつか行ってみたい」ではなく、<br>
+              <span class="fan-message-emphasis">「この日だからこそ見届けたい」。</span>
+            </p>
+
+            <p>
+              これまでリアルライブを見てきた一人のファンとして、
+              ぜひ会場で見届けてほしいと思っています。
+            </p>
+
+            <p class="fan-message-closing">
+              少しでも気になっている方は、ぜひ一度、
+              ライブ会場でその歌声を体感してみてください。
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="concept" id="concept">
+      <div class="section-inner">
+        <p class="eyebrow">Concept</p>
+        <p class="concept-lead">
+          初披露の3Dモデルで送る<br>
+          1st ワンマンライブ
+        </p>
+        <div class="divider"></div>
+        <p class="concept-body">
+          デビューから積み重ねてきた歌声と物語を、一夜だけのステージに。
+          夢羽ヒメというひとりのVSingerが持つ「可憐さ」と「圧倒的な歌唱力」、
+          そのコントラストを最も近い距離で体感できる時間をお届けします。
+          ここでしか聴けないパフォーマンスを、ぜひご体験ください。
+        </p>
+      </div>
+    </section>
+
+    <section class="guest" id="guest">
+      <div class="section-inner">
+        <p class="eyebrow">Guest</p>
+        <h2 class="section-title">ゲスト出演</h2>
+
+        <div class="guest-card reveal">
+          <p class="guest-role">SPECIAL GUEST</p>
+          <p class="guest-name">春歌みこと</p>
+          <p class="guest-desc">
+            シアーミュージックV所属。トップオブリア充を目指すVSinger。
+            エネルギッシュで元気あふれる歌声が魅力。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="outline" id="outline">
+      <div class="section-inner">
+        <p class="eyebrow">Outline</p>
+        <h2 class="section-title">開催概要</h2>
+
+        <dl class="outline-table">
+          <div class="outline-row reveal">
+            <dt>DATE</dt>
+            <dd>
+              2026年10月10日（土）
+              <small>開場 18:15 / 開演 19:15 / 終演 20:45（予定）</small>
+            </dd>
+          </div>
+
+          <div class="outline-row reveal">
+            <dt>VENUE</dt>
+            <dd>
+              LIVE SPACE Q
+              <small>東京都千代田区外神田4丁目4-3 SILビル 9F</small>
+            </dd>
+          </div>
+
+          <div class="outline-row reveal">
+            <dt>ACCESS</dt>
+            <dd>JR「秋葉原駅」電気街口より徒歩7分</dd>
+          </div>
+
+          <div class="outline-row reveal">
+            <dt>配信</dt>
+            <dd>
+              Bitfanにてアーカイブ配信あり
+              <small>配信視聴チケットは別途販売</small>
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="ticket" id="ticket">
+      <div class="section-inner">
+        <p class="eyebrow">Ticket</p>
+        <h2 class="section-title">チケット</h2>
+
+        <div class="ticket-deadline-box">
+          <p class="ticket-deadline-label">先行抽選受付中</p>
+          <p class="ticket-deadline-date">
+            申込締切 <strong>7月29日（水）</strong>
+          </p>
+          <p class="ticket-deadline-note">
+            先行抽選限定のチケット・特典があります
+          </p>
+        </div>
+
+        <div class="ticket-grid">
+          <a
+            href="https://jcm-event.bitfan.id/events/21090"
+            class="ticket-card-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="ロイヤルひめにてぃチケットの販売ページを見る"
+          >
+            <article class="ticket-card is-featured reveal">
+              <span class="ticket-badge">先行抽選限定</span>
+              <h3 class="ticket-name">ロイヤルひめにてぃチケット</h3>
+              <p class="ticket-desc">
+                S席に加え、直筆サイン入りTシャツ・直筆色紙・
+                直筆サイン入りポストカードが付属します。
+              </p>
+              <p class="ticket-price">¥15,000<span>（税込）</span></p>
+              <p class="ticket-card-cta">販売ページを見る →</p>
+            </article>
+          </a>
+
+          <a
+            href="https://jcm-event.bitfan.id/events/21090"
+            class="ticket-card-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="一般チケットの販売ページを見る"
+          >
+            <article class="ticket-card reveal">
+              <h3 class="ticket-name">一般チケット</h3>
+              <p class="ticket-desc">
+                会場での通常観覧チケット。
+                先行抽選で申し込むと、直筆サイン入りポストカードが付属します。
+              </p>
+              <p class="ticket-price">¥5,000<span>（税込）</span></p>
+              <p class="ticket-card-cta">販売ページを見る →</p>
+            </article>
+          </a>
+        </div>
+
+        <p class="ticket-note">
+          ※価格はすべて税込です。受付期間や特典の詳細は公式チケットページをご確認ください。<br>
+          ※クリックすると、外部のチケット販売ページに移動します。
+        </p>
+      </div>
+    </section>
+
+    <section class="goods" id="goods">
+      <div class="section-inner">
+        <p class="eyebrow">Goods</p>
+        <h2 class="section-title">物販情報</h2>
+
+        <div class="goods-grid">
+          <article class="goods-card reveal">
+            <div class="goods-thumb">COMING SOON</div>
+            <div class="goods-info">
+              <p class="name">ライブグッズ</p>
+              <p class="price">詳細発表をお待ちください</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="attention" id="attention">
+      <div class="section-inner">
+        <p class="eyebrow">Attention</p>
+        <h2 class="section-title">注意事項</h2>
+
+        <ul class="attention-list">
+          <li class="reveal">抽選販売の時点で定員に達した場合、先着販売および当日券の販売が行われない場合があります。</li>
+          <li class="reveal">ワンドリンク制です。</li>
+          <li class="reveal">スマートフォンを含め、撮影・収録は禁止です。</li>
+          <li class="reveal">入場時に手荷物チェック、金属探知機による確認、身分証確認があります。</li>
+          <li class="reveal">ペットボトルなどの飲料は持ち込み禁止です。</li>
+          <li class="reveal">折って光らせるタイプのサイリウムは使用禁止です。</li>
+          <li class="reveal">プレゼントボックスはありません。お手紙のみ受け付け予定です。</li>
+          <li class="reveal">最新かつ詳細な注意事項は、必ず公式チケットページをご確認ください。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="disclaimer" id="disclaimer">
+      <div class="section-inner">
+        <ul class="disclaimer-list">
+          <li>※本サイトは、VSinger 夢羽ヒメさんを応援する一ファンが運営する非公式ファンサイトです。本人および関係者各位とは一切関係ありません。</li>
+          <li>※掲載している画像は、関係各所より掲載許可を得たものを使用しています。無断転載・二次利用はご遠慮ください。</li>
+          <li>※掲載されている画像等の著作権・肖像権は、それぞれの権利者に帰属します。</li>
+          <li>※掲載情報は変更される場合があります。最新情報は必ず公式発表をご確認ください。</li>
+        </ul>
+
+        <p class="disclaimer-contact">
+          お問い合わせ：
+          <a href="mailto:amagase.sui@gmail.com">amagase.sui@gmail.com</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p class="footer-name">夢羽ヒメ 公式SNS等</p>
+
+    <div class="sns-links">
+      <a href="https://x.com/hime_yumeha" aria-label="X" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M18.9 2H22l-7.6 8.7L23.3 22h-7l-5.5-7.2L4.5 22H1.4l8.1-9.3L.9 2h7.2l5 6.6L18.9 2Zm-1.2 18h1.7L7.4 4H5.6l12.1 16Z"/>
+        </svg>
+      </a>
+
+      <a href="https://www.youtube.com/@hime.yumeha" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.5v-7l6.3 3.5-6.3 3.5Z"/>
+        </svg>
+      </a>
+
+      <a href="https://lit.link/HimeYumeha" aria-label="lit.link" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2 3 7v10l9 5 9-5V7l-9-5Zm0 2.3 6.8 3.8L12 12l-6.8-3.9L12 4.3ZM5 9.2l6 3.4v7L5 16.2v-7Zm8 10.4v-7l6-3.4v7l-6 3.4Z"/>
+        </svg>
+      </a>
+    </div>
+
+    <p class="footer-copy">© 2026 Unofficial Fan Site for Yumeha Hime.</p>
+  </footer>
+
+  <script>
+    "use strict";
+
+    function initNavToggle(){
+      const toggle = document.getElementById("navToggle");
+      const drawer = document.getElementById("navDrawer");
+      const scrim = document.getElementById("navScrim");
+
+      const closeDrawer = () => {
+        drawer.classList.remove("open");
+        scrim.classList.remove("open");
+        toggle.setAttribute("aria-expanded","false");
+      };
+
+      toggle.addEventListener("click",() => {
+        const isOpen = drawer.classList.toggle("open");
+        scrim.classList.toggle("open",isOpen);
+        toggle.setAttribute("aria-expanded",String(isOpen));
+      });
+
+      scrim.addEventListener("click",closeDrawer);
+      drawer.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click",closeDrawer);
+      });
+    }
+
+    function initReveal(){
+      const targets = document.querySelectorAll(".reveal");
+
+      if(!("IntersectionObserver" in window)){
+        targets.forEach(target => target.classList.add("is-visible"));
+        return;
+      }
+
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting){
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },{threshold:.12});
+
+      targets.forEach(target => observer.observe(target));
+    }
+
+    function initStarfield(){
+      const container = document.getElementById("stars");
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d");
+      container.appendChild(canvas);
+
+      let stars = [];
+      let frame = 0;
+
+      function resize(){
+        const ratio = Math.min(window.devicePixelRatio || 1,2);
+        canvas.width = Math.floor(window.innerWidth * ratio);
+        canvas.height = Math.floor(window.innerHeight * ratio);
+        canvas.style.width = `${window.innerWidth}px`;
+        canvas.style.height = `${window.innerHeight}px`;
+        context.setTransform(ratio,0,0,ratio,0,0);
+
+        const count = Math.min(
+          140,
+          Math.floor((window.innerWidth * window.innerHeight) / 9000)
+        );
+
+        stars = Array.from({length:count},() => ({
+          x:Math.random() * window.innerWidth,
+          y:Math.random() * window.innerHeight,
+          r:Math.random() * 1.4 + .3,
+          baseAlpha:Math.random() * .6 + .2,
+          phase:Math.random() * Math.PI * 2,
+          speed:Math.random() * .015 + .005,
+          gold:Math.random() < .15
+        }));
+      }
+
+      function draw(){
+        context.clearRect(0,0,window.innerWidth,window.innerHeight);
+        frame += 1;
+
+        stars.forEach(star => {
+          const twinkle = Math.sin(frame * star.speed + star.phase) * .35 + .65;
+          context.beginPath();
+          context.arc(star.x,star.y,star.r,0,Math.PI * 2);
+          context.fillStyle = star.gold
+            ? `rgba(216,177,104,${star.baseAlpha * twinkle})`
+            : `rgba(230,222,250,${star.baseAlpha * twinkle})`;
+          context.fill();
+        });
+
+        requestAnimationFrame(draw);
+      }
+
+      resize();
+      window.addEventListener("resize",resize);
+
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if(reduceMotion){
+        draw();
+      }else{
+        requestAnimationFrame(draw);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded",() => {
+      initNavToggle();
+      initReveal();
+      initStarfield();
+    });
+  </script>
+</body>
+</html>
