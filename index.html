@@ -263,6 +263,12 @@
       overflow:hidden;
     }
 
+    .protected-image{
+      user-select:none;
+      -webkit-user-select:none;
+      -webkit-user-drag:none;
+    }
+
     .hero-visual img{
       width:100%;
       height:100%;
@@ -411,6 +417,77 @@
       width:1px;
       height:42px;
       background:linear-gradient(var(--gold),transparent);
+    }
+
+
+
+    /* ---------------- FAN MESSAGE / 見届けたい理由 ---------------- */
+    .fan-message{
+      padding:var(--space-section) 0;
+    }
+
+    .fan-message-card{
+      max-width:820px;
+      margin:0 auto;
+      padding:clamp(28px,6vw,56px);
+      border:1px solid rgba(243,218,160,.28);
+      border-radius:var(--radius-l);
+      background:
+        linear-gradient(145deg,rgba(182,163,232,.08),rgba(216,177,104,.06)),
+        rgba(255,255,255,.025);
+      box-shadow:0 18px 50px rgba(0,0,0,.18);
+    }
+
+    .fan-message-title{
+      font-family:var(--font-display);
+      font-size:clamp(27px,5vw,42px);
+      line-height:1.5;
+      color:var(--lavender-soft);
+      text-align:center;
+      letter-spacing:.04em;
+      margin-bottom:26px;
+    }
+
+    .fan-message-title::after{
+      content:'';
+      display:block;
+      width:72px;
+      height:1px;
+      margin:20px auto 0;
+      background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    }
+
+    .fan-message-body{
+      max-width:680px;
+      margin:0 auto;
+      color:var(--text-sub);
+      font-size:clamp(14px,2.5vw,16px);
+      line-height:2;
+    }
+
+    .fan-message-body p + p{
+      margin-top:16px;
+    }
+
+    .fan-message-quote{
+      color:var(--text-main);
+      font-family:var(--font-display);
+      font-size:clamp(17px,3.5vw,22px);
+      line-height:1.8;
+      text-align:center;
+    }
+
+    .fan-message-emphasis{
+      color:var(--gold-bright);
+      font-weight:700;
+    }
+
+    .fan-message-closing{
+      margin-top:24px !important;
+      padding-top:22px;
+      border-top:1px solid var(--panel-border);
+      color:var(--text-main);
+      text-align:center;
     }
 
     .concept,
@@ -754,7 +831,6 @@
     <a href="#top" class="nav-logo">Miracle World</a>
 
     <nav class="nav-links" aria-label="メインメニュー">
-      <a href="#concept">CONCEPT</a>
       <a href="#outline">OUTLINE</a>
       <a href="#ticket">TICKET</a>
       <a href="#goods">GOODS</a>
@@ -769,7 +845,6 @@
   <div class="nav-scrim" id="navScrim"></div>
 
   <nav class="nav-drawer" id="navDrawer" aria-label="スマートフォンメニュー">
-    <a href="#concept">CONCEPT</a>
     <a href="#outline">OUTLINE</a>
     <a href="#ticket">TICKET</a>
     <a href="#goods">GOODS</a>
@@ -787,6 +862,9 @@
         <img
           src="https://www.dropbox.com/scl/fi/8jknj02o5403amtejhrmm/95b540d6735c1f76.png?rlkey=w0fds0o0ecyu2zb3ecxdmo730&st=s5vfmfqf&raw=1"
           alt="夢羽ヒメ 1stワンマンライブ メインビジュアル"
+          class="protected-image"
+          draggable="false"
+          oncontextmenu="return false;"
         >
       </div>
 
@@ -827,23 +905,52 @@
       </div>
     </section>
 
-    <section class="concept" id="concept">
+
+
+    <!-- ================= FAN MESSAGE ================= -->
+    <section class="fan-message" id="fan-message">
       <div class="section-inner">
-        <p class="eyebrow">Concept</p>
-        <p class="concept-lead">
-          初披露の3Dモデルで送る<br>
-          1st ワンマンライブ
-        </p>
-        <div class="divider"></div>
-        <p class="concept-body">
-          デビューから積み重ねてきた歌声と物語を、一夜だけのステージに。
-          夢羽ヒメというひとりのVSingerが持つ「可憐さ」と「圧倒的な歌唱力」、
-          そのコントラストを最も近い距離で体感できる時間をお届けします。
-          ここでしか聴けないパフォーマンスを、ぜひご体験ください。
-        </p>
+        <article class="fan-message-card reveal">
+          <h2 class="fan-message-title">この日だからこそ、見届けたい。</h2>
+
+          <div class="fan-message-body">
+            <p>
+              夢羽ヒメさんにとって、初めてのワンマンライブ。<br>
+              そして、初披露となる3Dライブ。
+            </p>
+
+            <p>
+              これまで歌枠やリアルライブで積み重ねてきた努力や想いが、
+              一つのステージとして形になる特別な一日です。
+            </p>
+
+            <p class="fan-message-quote">
+              「リアルライブは初めて」<br>
+              「一人で参加するのは少し不安」
+            </p>
+
+            <p>
+              そんな方でも、歌を楽しむだけで十分楽しめると思います。
+            </p>
+
+            <p class="fan-message-quote">
+              「いつか行ってみたい」ではなく、<br>
+              <span class="fan-message-emphasis">「この日だからこそ見届けたい」。</span>
+            </p>
+
+            <p>
+              これまでリアルライブを見てきた一人のファンとして、
+              ぜひ会場で見届けてほしいと思っています。
+            </p>
+
+            <p class="fan-message-closing">
+              少しでも気になっている方は、ぜひ一度、
+              ライブ会場でその歌声を体感してみてください。
+            </p>
+          </div>
+        </article>
       </div>
     </section>
-
     <section class="guest" id="guest">
       <div class="section-inner">
         <p class="eyebrow">Guest</p>
@@ -1063,6 +1170,21 @@
       });
     }
 
+
+    function initImageProtection(){
+      document.addEventListener("contextmenu",event => {
+        if(event.target.closest("img")){
+          event.preventDefault();
+        }
+      });
+
+      document.addEventListener("dragstart",event => {
+        if(event.target.closest("img")){
+          event.preventDefault();
+        }
+      });
+    }
+
     function initReveal(){
       const targets = document.querySelectorAll(".reveal");
 
@@ -1146,6 +1268,7 @@
 
     document.addEventListener("DOMContentLoaded",() => {
       initNavToggle();
+      initImageProtection();
       initReveal();
       initStarfield();
     });
